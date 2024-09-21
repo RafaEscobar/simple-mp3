@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/screens/player_screen.dart';
+import 'package:simple_mp3/services/preferences.dart';
 import 'package:simple_mp3/utils/alert.dart';
 
 class LoadScreen extends StatefulWidget{
@@ -87,7 +90,8 @@ class _LoadScreenState extends State<LoadScreen> {
       await Future.delayed(const Duration(seconds: 2));
       (paths.isEmpty) ? Alert.showBasicAlert('No tienes musica') : Alert.showBasicAlert('Redireccionamos al usuario al reproductor');
     } else {
-      Alert.showBasicAlert('Permiso denegado');
+      Preferences.storagePermission = false;
+      if (mounted) context.goNamed(PlayerScreen.routeName);
     }
   }
 
