@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_mp3/screens/load_screen.dart';
 import 'package:simple_mp3/screens/player.dart';
 
 void main(){
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: const Player(),
+      home: const LoadScreen(),
     );
   }
 }

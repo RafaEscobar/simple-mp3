@@ -12,7 +12,6 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-
   Future<List<String>> searchFiles() async {
     List<String> paths = [];
     PermissionStatus status = await Permission.storage.request();
@@ -72,7 +71,7 @@ class _PlayerState extends State<Player> {
                 child: FutureBuilder(
                   future: searchFiles(),
                   builder: (context, snapshot) {
-                    Widget body;widget
+                    Widget body;
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       body = const Center(
                         child: CircularProgressIndicator(),
