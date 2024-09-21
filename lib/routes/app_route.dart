@@ -8,7 +8,7 @@ class AppRoute {
     List<RouteBase> routes = [
       GoRoute(
         path: "/",
-        builder: (context, state) => const LoadScreen(),
+        builder: (BuildContext context, GoRouterState state) => const LoadScreen(),
         routes: [
           GoRoute(
             path: PlayerScreen.routeName,
@@ -21,7 +21,7 @@ class AppRoute {
 
     return GoRouter(
       routes: routes,
-      navigatorKey: navigatorKey,
+      navigatorKey: navigatorKey
     );
   }
 }
