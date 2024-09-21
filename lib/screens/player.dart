@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/utils/alert.dart';
 
 class Player extends StatefulWidget {
   const Player({super.key});
@@ -58,37 +59,50 @@ class _PlayerState extends State<Player> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: FutureBuilder(
-          future: searchFiles(),
-          builder: (context, snapshot) {
-            Widget body;
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              body = const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if(snapshot.hasError) {
-              body = const Center(
-                child: Text('Ha ocurrido un error'),
-              );
-            } else if(!snapshot.hasData || (snapshot.data ?? []).isEmpty) {
-              body = const Center(
-                child: Text('No tienes musica en tu dispositivo'),
-              );
-            } else {
-              List<String> paths = snapshot.data!;
-
-              body = ListView.builder(
-                itemCount: paths.length,
-                itemBuilder: (context, index) {
-                  return Text(paths[index]);
-                },
-              );
-            }
-            return body;
-          },
-        )
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () => Alert.showBasicAlert(),
+                child: const Text('Clic')
+              ),
+              Expanded(
+                child: FutureBuilder(
+                  future: searchFiles(),
+                  builder: (context, snapshot) {
+                    Widget body;widget
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      body = const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if(snapshot.hasError) {
+                      body = const Center(
+                        child: Text('Ha ocurrido un error'),
+                      );
+                    } else if(!snapshot.hasData || (snapshot.data ?? []).isEmpty) {
+                      body = const Center(
+                        child: Text('No tienes musica en tu dispositivo'),
+                      );
+                    } else {
+                      List<String> paths = snapshot.data!;
+        
+                      body = ListView.builder(
+                        itemCount: paths.length,
+                        itemBuilder: (context, index) {
+                          return Text(paths[index]);
+                        },
+                      );
+                    }
+                    return body;
+                  },
+                )
+              )
+              
+            ],
+          )
+        ),
       ),
     );
   }
