@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 
 class LoadScreen extends StatelessWidget{
   const LoadScreen({super.key});
+  static const String routeName = 'load-screen';
 
   @override
   Widget build(BuildContext context){

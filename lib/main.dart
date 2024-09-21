@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_mp3/screens/load_screen.dart';
-import 'package:simple_mp3/screens/player.dart';
+import 'package:simple_mp3/routes/app_route.dart';
 
 void main(){
   runApp(const MyApp());
@@ -12,10 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
-      navigatorKey: navigatorKey,
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home: const LoadScreen(),
+      routerConfig: AppRoute.getGoRoutes(navigatorKey),
     );
   }
 }

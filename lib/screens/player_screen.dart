@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/utils/alert.dart';
 
-class Player extends StatefulWidget {
-  const Player({super.key});
+class PlayerScreen extends StatefulWidget {
+  const PlayerScreen({super.key});
+  static const String routeName = 'playerSPlayerScreen-screen';
 
   @override
-  State<Player> createState() => _PlayerState();
+  State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
-class _PlayerState extends State<Player> {
+class _PlayerScreenState extends State<PlayerScreen> {
   Future<List<String>> searchFiles() async {
     List<String> paths = [];
     PermissionStatus status = await Permission.storage.request();
