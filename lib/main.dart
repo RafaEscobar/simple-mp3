@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_mp3/player.dart';
+import 'package:simple_mp3/screens/player.dart';
 
 void main(){
   runApp(const MyApp());
