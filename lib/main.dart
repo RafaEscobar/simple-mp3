@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:simple_mp3/routes/app_route.dart';
+import 'package:simple_mp3/services/preferences.dart';
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Preferences.init();
   runApp(const MyApp());
 }
 

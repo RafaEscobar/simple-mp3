@@ -28,14 +28,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
           color: Colors.white,
           child: const Text('AQUI IRA EL REPRODUCTOR DE MUSICA')
         ) :
-        SizedBox(
-          child: Column(
-            children: [
-              const Text(
-                'No tenemos tu permiso para buscar tu música'
-              ),
-              Lottie.asset('assets/animations/empty_state.json')
-            ],
+        Center(
+          child: SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Necesitamos permiso para buscar tu música',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(height: 10,),
+                Lottie.asset('assets/animations/empty_state.json')
+              ],
+            ),
           ),
         )
       ),

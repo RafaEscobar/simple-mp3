@@ -18,13 +18,13 @@ class LoadScreen extends StatefulWidget{
 
 class _LoadScreenState extends State<LoadScreen> {
 
-  Future<PermissionStatus> requestAccessPermission() async{
+  Future<PermissionStatus> requestPermission() async {
     //* Solicitamos permiso al usuario para ingresar al almacenamiento interno
     PermissionStatus status = await Permission.storage.request();
     return status;
   }
 
-  Future<List<String>> searchMusic() async {
+  Future<void> searchMusic() async {
     //* Listado en donde se guardaran las rutas de las canciones
     List<String> paths = [];
     //* Listado de carpetas cuyo acceso es restringido por android (NO HAREMOS BUSQUEDA EN ESTAS CARPETAS)
@@ -74,22 +74,23 @@ class _LoadScreenState extends State<LoadScreen> {
     Directory rootDir = Directory('/storage/emulated/0');
     //* Llamamos por primera vez a la función recursiva
     await listFiles(rootDir);
-    return paths;
   }
 
   void initLoad() async {
-    PermissionStatus statusRequest = await requestAccessPermission();
+    PermissionStatus statusRequest = await requestPermission();
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
+    print(statusRequest);
     if (statusRequest.isGranted) {
       //* Si paths contiene algo eso indica que hay musica en el dispositivo, de no haber se le indica al usuario.
-      final List<String> paths = await searchMusic();
-      await Future.delayed(const Duration(seconds: 2));
-      (paths.isEmpty) ? Alert.showBasicAlert('No tienes musica') : Alert.showBasicAlert('Redireccionamos al usuario al reproductor');
-    } else {
+      await searchMusic();
+      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) context.goNamed(PlayerScreen.routeName);
+      //! REDIRECCIÓN AL HOME
+    } else if(statusRequest.isDenied || statusRequest.isPermanentlyDenied){
       Preferences.storagePermission = false;
       if (mounted) context.goNamed(PlayerScreen.routeName);
     }
