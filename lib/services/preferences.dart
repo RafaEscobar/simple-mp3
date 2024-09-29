@@ -1,3 +1,4 @@
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences {
@@ -5,6 +6,9 @@ class Preferences {
 
   static Future<void> init() async => pref = await SharedPreferences.getInstance();
 
-  static bool get storagePermission => pref.getBool('hasStoragePermission') ?? false;
-  static set storagePermission(bool newValue) => pref.setBool('hasStoragePermission', newValue);
+  static PermissionStatus get storagePermissionResponse{
+    int indexValue = pref.getInt('storagePermissionResponse')!;
+    return PermissionStatus.values[indexValue];
+  }
+  static set storagePermissionResponse(PermissionStatus newValue) => pref.setInt('storagePermissionResponse', newValue.index);
 }

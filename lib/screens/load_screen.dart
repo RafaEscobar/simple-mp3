@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/preferences.dart';
 import 'package:simple_mp3/utils/alert.dart';
+import 'package:simple_mp3/utils/local_permission.dart';
 
 class LoadScreen extends StatefulWidget{
   const LoadScreen({super.key});
@@ -17,13 +18,6 @@ class LoadScreen extends StatefulWidget{
 }
 
 class _LoadScreenState extends State<LoadScreen> {
-
-  Future<PermissionStatus> requestPermission() async {
-    //* Solicitamos permiso al usuario para ingresar al almacenamiento interno
-    PermissionStatus status = await Permission.storage.request();
-    return status;
-  }
-
   Future<void> searchMusic() async {
     //* Listado en donde se guardaran las rutas de las canciones
     List<String> paths = [];
@@ -77,21 +71,17 @@ class _LoadScreenState extends State<LoadScreen> {
   }
 
   void initLoad() async {
-    PermissionStatus statusRequest = await requestPermission();
+    Preferences.storagePermissionResponse = await LocalPermission.requestPermission();
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
-    print(statusRequest);
-    if (statusRequest.isGranted) {
-      //* Si paths contiene algo eso indica que hay musica en el dispositivo, de no haber se le indica al usuario.
+    if (Preferences.storagePermissionResponse.isGranted) {
       await searchMusic();
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) context.goNamed(PlayerScreen.routeName);
-      //! REDIRECCIÓN AL HOME
-    } else if(statusRequest.isDenied || statusRequest.isPermanentlyDenied){
-      Preferences.storagePermission = false;
+    } else if(Preferences.storagePermissionResponse.isDenied || Preferences.storagePermissionResponse.isPermanentlyDenied){
       if (mounted) context.goNamed(PlayerScreen.routeName);
     }
   }
