@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:simple_mp3/utils/alert.dart';
+import 'package:simple_mp3/services/alert_service.dart';
 
-class Music {
+class MusicUseCase {
     static Future<void> search() async {
     //* Listado en donde se guardaran las rutas de las canciones
     List<String> paths = [];
@@ -45,7 +45,7 @@ class Music {
         }
       } catch (e) {
         //* Catch de errores no controlados
-        Alert.showBasicAlert(e.toString());
+        AlertService.showBasicAlert(e.toString());
       }
     }
 
