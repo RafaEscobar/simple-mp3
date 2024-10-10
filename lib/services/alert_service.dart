@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_mp3/main.dart';
 
-class Alert {
+class AlertService {
   static void showBasicAlert(String message){
     showModalBottomSheet(
       context: MyApp.navigatorKey.currentContext!,
