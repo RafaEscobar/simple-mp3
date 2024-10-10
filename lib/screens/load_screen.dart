@@ -18,7 +18,7 @@ class LoadScreen extends StatefulWidget{
 class _LoadScreenState extends State<LoadScreen> {
   void initLoad() async {
     //* Función que lanza la solicitud de permiso
-    await PermissionService.storageAccessRequest();
+    await PermissionService.requestAccessToStorage();
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones

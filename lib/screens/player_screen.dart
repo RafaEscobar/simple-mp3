@@ -16,13 +16,13 @@ class PlayerScreen extends StatefulWidget {
 class _PlayerScreenState extends State<PlayerScreen> {
   late PermissionStatus showNoPermission;
 
-  Future<void> requestPermission() async {
+  Future<void> requestPermissionAgain() async {
     if (PreferencesService.storagePermissionResponse.isPermanentlyDenied) {
       AlertService.showBasicAlert('A continuación seras redirigido a la configuración de la aplicación, ahi podras conceder el permiso para acceder al almacenamiento interno');
       await Future.delayed(const Duration(seconds: 5));
       openAppSettings();
     } else {
-      await PermissionService.storageAccessRequest();
+      await PermissionService.requestAccessToStorage();
     }
   }
 
@@ -51,7 +51,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   title: 'Necesitamos permiso para buscar tu música'
                 ),
                 ElevatedButton(
-                  onPressed: requestPermission,
+                  onPressed: requestPermissionAgain,
                   child: const Text('Conceder permiso')
                 )
               ],
