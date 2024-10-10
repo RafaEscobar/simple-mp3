@@ -1,9 +1,9 @@
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/services/preferences_service.dart';
 
 class PermissionService {
-  static Future<PermissionStatus> storageAccessRequest() async {
+  static Future<void> storageAccessRequest() async {
     //* Solicitamos permiso al usuario para ingresar al almacenamiento interno
-    PermissionStatus status = await Permission.storage.request();
-    return status;
+    PreferencesService.storagePermissionResponse = await Permission.storage.request();
   }
 }

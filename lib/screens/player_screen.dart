@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/permission_service.dart';
-import 'package:simple_mp3/services/preferences.dart';
+import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/widgets/empty_state.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -17,20 +17,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
   late PermissionStatus showNoPermission;
 
   Future<void> requestPermission() async {
-    if (Preferences.storagePermissionResponse.isPermanentlyDenied) {
+    if (PreferencesService.storagePermissionResponse.isPermanentlyDenied) {
       AlertService.showBasicAlert('A continuación seras redirigido a la configuración de la aplicación, ahi podras conceder el permiso para acceder al almacenamiento interno');
       await Future.delayed(const Duration(seconds: 5));
       openAppSettings();
     } else {
-      PermissionStatus statusRequest = await PermissionService.storageAccessRequest();
-      Preferences.storagePermissionResponse = statusRequest;
+      await PermissionService.storageAccessRequest();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    showNoPermission = Preferences.storagePermissionResponse;
+    showNoPermission = PreferencesService.storagePermissionResponse;
   }
 
   @override

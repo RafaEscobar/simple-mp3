@@ -1,7 +1,7 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Preferences {
+class PreferencesService {
   static late SharedPreferences pref;
 
   static Future<void> init() async => pref = await SharedPreferences.getInstance();

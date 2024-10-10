@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
-import 'package:simple_mp3/services/preferences.dart';
+import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
 
 class LoadScreen extends StatefulWidget{
@@ -18,13 +18,13 @@ class LoadScreen extends StatefulWidget{
 class _LoadScreenState extends State<LoadScreen> {
   void initLoad() async {
     //* Función que lanza la solicitud de permiso
-    Preferences.storagePermissionResponse = await PermissionService.storageAccessRequest();
+    await PermissionService.storageAccessRequest();
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
-    if (Preferences.storagePermissionResponse.isGranted) {
+    if (PreferencesService.storagePermissionResponse.isGranted) {
       //* Buscamos la musica en el dispositivo
       await MusicUseCase.search();
       await Future.delayed(const Duration(seconds: 1));
