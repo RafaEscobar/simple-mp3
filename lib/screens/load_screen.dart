@@ -68,6 +68,7 @@ class _LoadScreenState extends State<LoadScreen> {
     Directory rootDir = Directory('/storage/emulated/0');
     //* Llamamos por primera vez a la función recursiva
     await listFiles(rootDir);
+    print(paths);
   }
 
   void initLoad() async {
