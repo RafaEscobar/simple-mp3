@@ -17,25 +17,25 @@ class LoadScreen extends StatefulWidget{
 
 class _LoadScreenState extends State<LoadScreen> {
   void initLoad() async {
-    //* Función que lanza la solicitud de permiso
-    await PermissionService.requestAccessToStorage();
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
-    if (PreferencesService.storagePermissionResponse.isGranted) {
-      //* Buscamos la musica en el dispositivo
-      await MusicUseCase.search();
-      await Future.delayed(const Duration(seconds: 1));
+    if (PreferencesService.firstLogin) {
+      //* Función que lanza la solicitud de permiso
+      await PermissionService.requestAccessToStorage();
+      if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+      PreferencesService.firstLogin = false;
     }
+    await Future.delayed(const Duration(seconds: 2));
     if (mounted) context.goNamed(PlayerScreen.routeName);
   }
 
   @override
   void initState() {
-    initLoad();
     super.initState();
+    initLoad();
   }
 
   @override
@@ -48,25 +48,9 @@ class _LoadScreenState extends State<LoadScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Estamos buscando tu música...',
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 22
-                ),
-              ),
-              const SizedBox(height: 38,),
               SizedBox(
-                width: size.width * .3,
-                child: Lottie.asset('assets/animations/load.json'),
-              ),
-              const SizedBox(height: 30,),
-              const Text(
-                'Esto solo sucedera una vez.',
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 14
-                ),
+                width: size.width * .8,
+                child: Lottie.asset('assets/animations/splash.json'),
               ),
             ],
           ),

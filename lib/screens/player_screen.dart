@@ -46,9 +46,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const EmptyState(
-                  lottiePath: 'assets/animations/empty_state.json',
-                  title: 'Necesitamos permiso para buscar tu música'
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: EmptyState(
+                    lottiePath: 'assets/animations/empty_state.json',
+                    title: 'Necesitamos permiso para buscar tu música'
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: requestPermissionAgain,
