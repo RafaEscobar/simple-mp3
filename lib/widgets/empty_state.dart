@@ -26,6 +26,7 @@ class EmptyState extends StatelessWidget{
               fontSize: 22,
               fontWeight: FontWeight.w700,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 6,),
           Text(

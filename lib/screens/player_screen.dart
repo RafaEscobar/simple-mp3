@@ -39,16 +39,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
         child: (showNoPermission.isGranted) ?
         Container(
           color: Colors.white,
-          child: const Text('AQUI IRA EL REPRODUCTOR DE MUSICA')
+          child: const Center(child:  Text('AQUI IRA EL REPRODUCTOR DE MUSICA...'))
         ) :
         Center(
           child: SizedBox(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const EmptyState(
-                  lottiePath: 'assets/animations/empty_state.json',
-                  title: 'Necesitamos permiso para buscar tu música'
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: EmptyState(
+                    lottiePath: 'assets/animations/empty_state.json',
+                    title: 'Necesitamos permiso para buscar música en tu dispositivo'
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: requestPermissionAgain,
