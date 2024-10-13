@@ -18,7 +18,7 @@ class LoadScreen extends StatefulWidget{
 }
 
 class _LoadScreenState extends State<LoadScreen> {
-  void initLoad() async {
+  void _initLoad() async {
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
@@ -31,11 +31,10 @@ class _LoadScreenState extends State<LoadScreen> {
       PreferencesService.firstLogin = false;
     }
     await Future.delayed(const Duration(seconds: 2));
-    hideSplash();
     if (mounted) context.goNamed(PlayerScreen.routeName);
   }
 
-  void hideSplash(){
+  void _hideSplash(){
     UserProvider userProviderReader = context.read<UserProvider>();
     if (!userProviderReader.hasShownSplash) userProviderReader.hasShownSplash = true;
   }
@@ -43,7 +42,10 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   void initState() {
     super.initState();
-    initLoad();
+    _initLoad();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _hideSplash();
+    });
   }
 
   @override

@@ -10,6 +10,7 @@ class UserProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+
   void clean(){
     _hasShownSplash = false;
     notifyListeners();
