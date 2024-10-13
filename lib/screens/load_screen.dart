@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
+import 'package:simple_mp3/services/providers/user_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
 
 class LoadScreen extends StatefulWidget{
@@ -29,7 +31,13 @@ class _LoadScreenState extends State<LoadScreen> {
       PreferencesService.firstLogin = false;
     }
     await Future.delayed(const Duration(seconds: 2));
+    hideSplash();
     if (mounted) context.goNamed(PlayerScreen.routeName);
+  }
+
+  void hideSplash(){
+    UserProvider userProviderReader = context.read<UserProvider>();
+    if (!userProviderReader.hasShownSplash) userProviderReader.hasShownSplash = true;
   }
 
   @override
