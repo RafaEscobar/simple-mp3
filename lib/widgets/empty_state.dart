@@ -17,8 +17,10 @@ class EmptyState extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(lottiePath),
           const SizedBox(height: 10,),
