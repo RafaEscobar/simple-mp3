@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserProvider extends ChangeNotifier{
+class AppProvider extends ChangeNotifier{
   bool _hasShownSplash = false;
 
   bool get hasShownSplash => _hasShownSplash;

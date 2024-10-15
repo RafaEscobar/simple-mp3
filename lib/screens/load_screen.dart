@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
-import 'package:simple_mp3/services/providers/user_provider.dart';
+import 'package:simple_mp3/services/providers/app_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
 
 class LoadScreen extends StatefulWidget{
@@ -35,8 +35,8 @@ class _LoadScreenState extends State<LoadScreen> {
   }
 
   void _hideSplash(){
-    UserProvider userProviderReader = context.read<UserProvider>();
-    if (!userProviderReader.hasShownSplash) userProviderReader.hasShownSplash = true;
+    AppProvider providerReader = context.read<AppProvider>();
+    if (!providerReader.hasShownSplash) providerReader.hasShownSplash = true;
   }
 
   @override
