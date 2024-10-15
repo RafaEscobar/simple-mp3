@@ -41,25 +41,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
           color: Colors.white,
           child: const Center(child:  Text('AQUI IRA EL REPRODUCTOR DE MUSICA...'))
         ) :
-        Center(
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: EmptyState(
-                    lottiePath: 'assets/animations/empty_state.json',
-                    title: 'Necesitamos permiso para buscar música en tu dispositivo'
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: requestPermissionAgain,
-                  child: const Text('Conceder permiso')
-                )
-              ],
-            ),
-          ),
+        EmptyState(
+          lottiePath: 'assets/animations/empty_state.json',
+          title: 'Necesitamos permiso para buscar música en tu dispositivo',
+          body: ElevatedButton(
+            onPressed: requestPermissionAgain,
+            child: const Text('Conceder permiso')
+          )
         )
       ),
     );

@@ -5,11 +5,13 @@ class EmptyState extends StatelessWidget{
   final String lottiePath;
   final String title;
   final String subtitle;
+  final Widget? body;
   const EmptyState({
     super.key,
     required this.lottiePath,
     required this.title,
-    this.subtitle = ''
+    this.subtitle = '',
+    this.body
   });
 
 
@@ -35,7 +37,9 @@ class EmptyState extends StatelessWidget{
               fontSize: 14,
               fontWeight: FontWeight.w200
             ),
-          )
+          ),
+          const SizedBox(height: 20,),
+          body ?? Container()
         ],
       ),
     );
