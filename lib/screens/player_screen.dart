@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
+import 'package:simple_mp3/use_cases/player/player_header.dart';
 import 'package:simple_mp3/widgets/empty_state.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -41,51 +41,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           color: Colors.white,
-          child: Column(
+          child: const Column(
             children: [
-              SizedBox(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Ionicons.options_outline,
-                      size: 32,
-                    ),
-                    const SizedBox(width: 20,),
-                    Expanded(
-                      child: TextField(
-                        onTapOutside: (event) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        style: const TextStyle(fontSize: 14),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                              color: Colors.grey,
-                              width: .5,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                              color: Colors.blue,
-                              width: .5,
-                            ),
-                          ),
-                          contentPadding: const EdgeInsets.all(0),
-                          hintText: 'Buscar canción',
-                          prefixIcon: const Icon(
-                            Ionicons.search,
-                            size: 22,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              PlayerHeader()
             ],
           )
         ) :
