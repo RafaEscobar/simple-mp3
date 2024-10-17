@@ -10,7 +10,6 @@ class AppProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-
   void clean(){
     _hasShownSplash = false;
     notifyListeners();

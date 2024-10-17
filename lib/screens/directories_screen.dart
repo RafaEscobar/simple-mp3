@@ -11,7 +11,7 @@ class _DirectoriesScreenState extends State<DirectoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      child: Placeholder(),
+      child: Text('de'),
     );
   }
 }

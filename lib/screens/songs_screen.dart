@@ -11,7 +11,7 @@ class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      child: Placeholder(),
+      child: Text('de'),
     );
   }
 }

@@ -46,9 +46,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
           child: const Column(
             children: [
               PlayerHeader(),
-              SizedBox(height: 10,),
               Expanded(
-                child: SingleChildScrollView(child: TabsNavigator())
+                child: SingleChildScrollView(
+                  child: TabsNavigator()
+                )
               )
             ],
           )

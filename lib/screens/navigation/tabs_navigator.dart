@@ -14,21 +14,22 @@ class TabsNavigator extends StatefulWidget {
 
 class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateMixin{
   late final TabController _controller;
+
   @override
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: 3);
   }
+
   @override
   Widget build(BuildContext context) {
-      Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
       height: size.height,
       child: Builder(
         builder: (context) {
-          return Expanded(
-            child: TabContainer(
+          return TabContainer(
             controller: _controller,
             tabEdge: TabEdge.top,
             tabsStart: 0.1,
@@ -66,7 +67,6 @@ class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateM
                 child: FavoritesScreen(),
               ),
             ],
-                  ),
           );
         }
       ),

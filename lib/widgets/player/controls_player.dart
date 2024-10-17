@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class ControlsPlayer extends StatelessWidget {
+class ControlsPlayer extends StatefulWidget {
   final double height;
   final String musicName;
   const ControlsPlayer({
@@ -11,10 +11,24 @@ class ControlsPlayer extends StatelessWidget {
   });
 
   @override
+  State<ControlsPlayer> createState() => _ControlsPlayerState();
+}
+
+class _ControlsPlayerState extends State<ControlsPlayer> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      height: height * .12,
+      height: widget.height * .12,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(
+            width: 1,
+            color: Colors.white
+          )
+        )
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,8 +36,8 @@ class ControlsPlayer extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: height * .06,
-                  height: height * .06,
+                  width: widget.height * .06,
+                  height: widget.height * .06,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
@@ -34,7 +48,7 @@ class ControlsPlayer extends StatelessWidget {
                 ),
                 const SizedBox(width: 10,),
                 Text(
-                  musicName,
+                  widget.musicName,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400
