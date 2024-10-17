@@ -15,14 +15,6 @@ class ControlsPlayer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       height: height * .12,
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            width: 1,
-            color: Colors.blue
-          )
-        )
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
