@@ -37,6 +37,7 @@ dependencies:
   permission_handler: ^11.3.1
   provider: ^6.1.2
   shared_preferences: ^2.3.2
+  tab_container: ^3.5.3
 
 dev_dependencies:
   flutter_lints: ^4.0.0
