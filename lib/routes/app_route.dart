@@ -16,7 +16,7 @@ class AppRoute {
             path: PlayerScreen.routeName,
             name: PlayerScreen.routeName,
             builder: (BuildContext context, GoRouterState state) => const PlayerScreen()
-          )
+          ),
         ]
       )
     ];

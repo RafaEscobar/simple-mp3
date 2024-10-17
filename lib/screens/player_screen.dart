@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/screens/navigation/tabs_navigator.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
@@ -41,12 +42,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
       body: SafeArea(
         child: (showNoPermission.isGranted) ?
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           color: Colors.white,
           child: const Column(
             children: [
               PlayerHeader(),
-              SizedBox(height: 20,),
+              SizedBox(height: 10,),
+              Expanded(
+                child: SingleChildScrollView(child: TabsNavigator())
+              )
             ],
           )
         ) :

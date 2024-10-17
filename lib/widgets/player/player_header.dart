@@ -6,7 +6,9 @@ class PlayerHeader extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
