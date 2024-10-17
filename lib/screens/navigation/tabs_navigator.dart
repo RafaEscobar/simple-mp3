@@ -52,9 +52,18 @@ class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateM
               Color(0xFFB0E0E6),
             ],
             tabs: const [
-              Text('Canciones'),
-              Text('Carpetas'),
-              Text('Favoritos'),
+              Text(
+                'Canciones',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+              Text(
+                'Carpetas',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
+              Text(
+                'Favoritos',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              ),
             ],
             children: const [
               SizedBox(
