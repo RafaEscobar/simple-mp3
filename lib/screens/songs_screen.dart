@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_mp3/widgets/player/player_card.dart';
 import 'package:simple_mp3/widgets/tools_row.dart';
 
 class SongsScreen extends StatefulWidget {
@@ -11,10 +12,13 @@ class SongsScreen extends StatefulWidget {
 class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
       child: Column(
         children: [
-          ToolsRow()
+          const ToolsRow(),
+          const SizedBox(height: 20,),
+          PlayerCard(size: size)
         ],
       ),
     );
