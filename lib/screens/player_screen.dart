@@ -3,8 +3,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
-import 'package:simple_mp3/use_cases/player/player_header.dart';
-import 'package:simple_mp3/widgets/controls_player.dart';
+import 'package:simple_mp3/widgets/player/player_header.dart';
+import 'package:simple_mp3/widgets/player/controls_player.dart';
 import 'package:simple_mp3/widgets/empty_state.dart';
 
 class PlayerScreen extends StatefulWidget {
