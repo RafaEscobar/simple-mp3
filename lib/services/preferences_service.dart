@@ -10,6 +10,7 @@ class PreferencesService {
     int indexValue = pref.getInt('storagePermissionResponse') ?? 0;
     return PermissionStatus.values[indexValue];
   }
+
   static set storagePermissionResponse(PermissionStatus newValue) => pref.setInt('storagePermissionResponse', newValue.index);
 
   static bool get firstLogin => pref.getBool('firstLogin') ?? true;

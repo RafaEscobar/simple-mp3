@@ -1,13 +1,15 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_mp3/main.dart';
+import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/alert_service.dart';
+import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class MusicUseCase {
     static Future<void> search() async {
     //* Listado en donde se guardaran las rutas de las canciones
-    List<Map<String, dynamic>> paths = [];
+    List<Song> paths = [];
     //* Listado de carpetas cuyo acceso es restringido por android (NO HAREMOS BUSQUEDA EN ESTAS CARPETAS)
     List<String> restrictedDirectories = [
       '/storage/emulated/0/Android',
@@ -42,18 +44,15 @@ class MusicUseCase {
             if (!isRestricted) await listFiles(Directory(entity.path));
           } else if (entity is File && entity.path.endsWith('.mp3')) {
             final metadata = await MetadataRetriever.fromFile(File(entity.path));
-            String title = metadata.trackName ?? 'Desconocido';
-            String artist = metadata.trackArtistNames?.join(', ') ?? 'Desconocido';
-            String duration = metadata.trackDuration.toString();
-            Uint8List? coverPage = metadata.albumArt;
+            Song currentSong = Song(
+              title: metadata.trackName ?? 'Desconocido',
+              artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
+              duration: metadata.trackDuration.toString(),
+              coverPage: metadata.albumArt
+            );
 
             //* Agregamos el path de la canción a nuestro listado final de paths
-            paths.add({
-              'title': title,
-              'artist': artist,
-              'duration': duration,
-              'coverPage': coverPage
-            });
+            paths.add(currentSong);
           }
         }
       } catch (e) {
@@ -66,6 +65,7 @@ class MusicUseCase {
     Directory rootDir = Directory('/storage/emulated/0');
     //* Llamamos por primera vez a la función recursiva
     await listFiles(rootDir);
-    Preferences.
+    AppProvider appProviderReader = navigatorKey.currentContext!.read<AppProvider>();
+    appProviderReader.songList = paths;
   }
 }
