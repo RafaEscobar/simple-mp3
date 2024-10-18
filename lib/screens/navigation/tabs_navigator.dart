@@ -47,9 +47,9 @@ class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateM
               fontSize: 13.0,
             ),
             colors: const [
-              Color(0xFFADD8E6),
-              Color(0xFF87CEEB),
               Color(0xFFB0E0E6),
+              Color(0xFFADD8E6),
+              Color(0xFFAFEEEE),
             ],
             tabs: const [
               Text(

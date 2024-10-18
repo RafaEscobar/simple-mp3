@@ -36,13 +36,20 @@ class _PlayerCardState extends State<PlayerCard> {
                   width: widget.size.height * .08,
                   height: widget.size.height * .08,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 0.8
-                    ),
+                    boxShadow: const[
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 10,
+                        offset: Offset(0, 5)
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Image.memory(widget.song.coverPage!),
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.memory(
+                    widget.song.coverPage!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(width: 10,),
                 Column(
@@ -56,11 +63,10 @@ class _PlayerCardState extends State<PlayerCard> {
                     Row(
                       children: [
                         const Icon(
-                          Ionicons.folder_outline,
+                          Ionicons.musical_note,
                           size: 16,
                           color: Colors.white,
                         ),
-                        const SizedBox(width: 6,),
                         Text(
                           widget.song.artist,
                           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.white),
