@@ -16,9 +16,16 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardState extends State<PlayerCard> {
+
+  String cropTitle(String title){
+    if (title.length<18) return title;
+    return "${title.substring(0, 18)}...";
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -42,7 +49,7 @@ class _PlayerCardState extends State<PlayerCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.song.title,
+                      cropTitle(widget.song.title),
                       style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     const SizedBox(height: 2,),
