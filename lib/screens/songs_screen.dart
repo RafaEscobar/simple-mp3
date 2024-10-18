@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_mp3/models/song.dart';
+import 'package:simple_mp3/services/providers/app_provider.dart';
 import 'package:simple_mp3/widgets/player/player_card.dart';
 import 'package:simple_mp3/widgets/tools_row.dart';
 
@@ -12,13 +15,24 @@ class SongsScreen extends StatefulWidget {
 class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
+    AppProvider appProviderRead = context.read<AppProvider>();
+    print(appProviderRead.songList);
+    print('nose');
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       child: Column(
         children: [
           const ToolsRow(),
           const SizedBox(height: 20,),
-          PlayerCard(size: size)
+          Expanded(
+            child: ListView.builder(
+              itemCount: appProviderRead.songList.length,
+              itemBuilder: (context, index) {
+                Song currentSong = appProviderRead.songList[index];
+                return PlayerCard(size: size, song: currentSong,);
+              },
+            ),
+          )
         ],
       ),
     );

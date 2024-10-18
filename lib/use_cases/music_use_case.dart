@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/main.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/alert_service.dart';
-import 'package:simple_mp3/services/cover_page_service.dart';
+import 'package:simple_mp3/services/song_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class MusicUseCase {
     static Future<void> search() async {
-    Uint8List defaultImage = await CoverPageService.getDefaultCoverPage();
+    Uint8List defaultImage = await SongService.buildCoverPage();
     //* Listado en donde se guardaran las rutas de las canciones
     List<Song> paths = [];
     //* Listado de carpetas cuyo acceso es restringido por android (NO HAREMOS BUSQUEDA EN ESTAS CARPETAS)
@@ -48,7 +48,7 @@ class MusicUseCase {
           } else if (entity is File && entity.path.endsWith('.mp3')) {
             final metadata = await MetadataRetriever.fromFile(File(entity.path));
             Song currentSong = Song(
-              title: metadata.trackName ?? 'Desconocido',
+              title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
               artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
               duration: metadata.trackDuration.toString(),
               coverPage: metadata.albumArt ?? defaultImage

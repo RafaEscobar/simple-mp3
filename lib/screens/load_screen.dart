@@ -24,12 +24,10 @@ class _LoadScreenState extends State<LoadScreen> {
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
-    if (PreferencesService.firstLogin) {
       //* Función que lanza la solicitud de permiso
-      await PermissionService.requestAccessToStorage();
-      if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-      PreferencesService.firstLogin = false;
-    }
+    await PermissionService.requestAccessToStorage();
+    if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+    PreferencesService.firstLogin = false;
     await Future.delayed(const Duration(seconds: 2));
     if (mounted) context.goNamed(PlayerScreen.routeName);
   }

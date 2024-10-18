@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:simple_mp3/models/song.dart';
 
 class PlayerCard extends StatefulWidget {
   final Size size;
+  final Song song;
   const PlayerCard({
     super.key,
-    required this.size
+    required this.size,
+    required this.song
   });
 
   @override
@@ -32,27 +35,28 @@ class _PlayerCardState extends State<PlayerCard> {
                     ),
                     borderRadius: BorderRadius.circular(6),
                   ),
+                  child: Image.memory(widget.song.coverPage!),
                 ),
                 const SizedBox(width: 10,),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Nombre de la canción',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      widget.song.title,
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
-                    SizedBox(height: 2,),
+                    const SizedBox(height: 2,),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Ionicons.folder_outline,
                           size: 16,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 6,),
+                        const SizedBox(width: 6,),
                         Text(
-                          'Nombre de la carpeta',
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.white),
+                          widget.song.artist,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.white),
                         )
                       ],
                     ),
