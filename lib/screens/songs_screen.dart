@@ -16,8 +16,6 @@ class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.read<AppProvider>();
-    print(appProviderRead.songList);
-    print('nose');
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       child: Column(

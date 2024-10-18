@@ -11,7 +11,10 @@ class PreferencesService {
     return PermissionStatus.values[indexValue];
   }
 
+  static String get currentSong =>  pref.getString('currentSong') ?? '';
+
   static set storagePermissionResponse(PermissionStatus newValue) => pref.setInt('storagePermissionResponse', newValue.index);
+  static set currentSong(String newValue) => pref.setString('currentSong', newValue);
 
   static bool get firstLogin => pref.getBool('firstLogin') ?? true;
   static set firstLogin(bool newValue) => pref.setBool('firstLogin', newValue);
