@@ -1,13 +1,16 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/main.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/alert_service.dart';
+import 'package:simple_mp3/services/cover_page_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class MusicUseCase {
     static Future<void> search() async {
+    Uint8List defaultImage = await CoverPageService.getDefaultCoverPage();
     //* Listado en donde se guardaran las rutas de las canciones
     List<Song> paths = [];
     //* Listado de carpetas cuyo acceso es restringido por android (NO HAREMOS BUSQUEDA EN ESTAS CARPETAS)
@@ -48,7 +51,7 @@ class MusicUseCase {
               title: metadata.trackName ?? 'Desconocido',
               artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
               duration: metadata.trackDuration.toString(),
-              coverPage: metadata.albumArt
+              coverPage: metadata.albumArt ?? defaultImage
             );
 
             //* Agregamos el path de la canción a nuestro listado final de paths
