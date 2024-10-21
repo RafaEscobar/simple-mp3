@@ -25,10 +25,12 @@ class _LoadScreenState extends State<LoadScreen> {
         * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
     */
       //* Función que lanza la solicitud de permiso
-    await PermissionService.requestAccessToStorage();
-    if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-    PreferencesService.firstLogin = false;
+    if (!PreferencesService.storagePermissionResponse.isGranted){
+      await PermissionService.requestAccessToStorage();
+      PreferencesService.firstLogin = false;
+    }
     await Future.delayed(const Duration(seconds: 2));
+    if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
     if (mounted) context.goNamed(PlayerScreen.routeName);
   }
 
@@ -40,8 +42,8 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   void initState() {
     super.initState();
-    _initLoad();
     WidgetsBinding.instance.addPostFrameCallback((_){
+      _initLoad();
       _hideSplash();
     });
   }
