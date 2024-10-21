@@ -18,7 +18,7 @@ class LoadScreen extends StatefulWidget{
 }
 
 class _LoadScreenState extends State<LoadScreen> {
-  void _initLoad() async {
+  Future<void> _initLoad() async {
     /*
       * Validamos:
         * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
@@ -31,7 +31,7 @@ class _LoadScreenState extends State<LoadScreen> {
     }
     await Future.delayed(const Duration(seconds: 2));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-    if (mounted) context.goNamed(PlayerScreen.routeName);
+    if (mounted) context.pushNamed(PlayerScreen.routeName);
   }
 
   void _hideSplash(){
@@ -42,8 +42,8 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 1), _initLoad);
     WidgetsBinding.instance.addPostFrameCallback((_){
-      _initLoad();
       _hideSplash();
     });
   }
@@ -59,8 +59,8 @@ class _LoadScreenState extends State<LoadScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: size.width * .8,
-                child: Lottie.asset('assets/animations/splash.json'),
+                width: size.width * .4,
+                child: Image.asset('assets/images/logo.png'),
               ),
             ],
           ),
