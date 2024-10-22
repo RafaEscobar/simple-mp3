@@ -73,9 +73,10 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     size: 40,
                   )
                 ),
-
                 IconButton(
-                  onPressed: () async => widget.playMusic(appProviderRead.currentSong.path),
+                  onPressed: () async {
+                    widget.playMusic(appProviderRead.currentSong.path);
+                  },
                   icon: const Icon(
                     Ionicons.play_circle_outline,
                     size: 40,
