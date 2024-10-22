@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:simple_mp3/models/song.dart';
+import 'package:simple_mp3/services/custom_string_service.dart';
 
 class PlayerCard extends StatefulWidget {
   final Size size;
@@ -16,12 +17,6 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardState extends State<PlayerCard> {
-
-  String cropTitle(String title){
-    if (title.length<18) return title;
-    return "${title.substring(0, 18)}...";
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,7 +55,7 @@ class _PlayerCardState extends State<PlayerCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        cropTitle(widget.song.title),
+                        CustomStringService.cropTitle(data: widget.song.title, length: 18),
                         style: const TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       const SizedBox(height: 2,),
@@ -72,7 +67,7 @@ class _PlayerCardState extends State<PlayerCard> {
                             color: Colors.white,
                           ),
                           Text(
-                            widget.song.artist,
+                            CustomStringService.cropTitle(data: widget.song.artist, length: 18),
                             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300, color: Colors.white),
                           )
                         ],
