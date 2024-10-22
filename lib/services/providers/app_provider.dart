@@ -8,7 +8,7 @@ class AppProvider extends ChangeNotifier{
     artist: '',
     duration: '',
     title: '',
-    path: ''
+    path: '',
   );
 
   bool get hasShownSplash => _hasShownSplash;

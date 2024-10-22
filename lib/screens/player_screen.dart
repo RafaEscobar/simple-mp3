@@ -82,7 +82,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
         )
       ),
       bottomNavigationBar: ControlsPlayer(
-        height: size.height,
+        size: size,
         playMusic: _playMusic,
       )
     );
