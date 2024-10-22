@@ -1,6 +1,5 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
@@ -17,13 +16,22 @@ class LoadScreen extends StatefulWidget{
   State<LoadScreen> createState() => _LoadScreenState();
 }
 
-class _LoadScreenState extends State<LoadScreen> {
+class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
+  //* Controladores para animaciones de entrada y salida
+  late AnimationController _entryController;
+  late AnimationController _exitController;
+  late Animation<double> _entryAnimation;
+  late Animation<double> _exitAnimation;
+
   Future<void> _initLoad() async {
     if (!PreferencesService.storagePermissionResponse.isGranted){
       await PermissionService.requestAccessToStorage();
       PreferencesService.firstLogin = false;
     }
+    await Future.delayed(const Duration(seconds: 1));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+    //* Inicia animación de salida
+    _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
   }
 
   void _hideSplash(){
@@ -34,23 +42,65 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   void initState() {
     super.initState();
+    //* Inicializando controlador de animación de entrada
+    _entryController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+    //* Inicializando controlador de animación de salida
+    _exitController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    );
+    //* Animación de entrada
+    _entryAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _entryController, curve: Curves.easeIn),
+    );
+    //* Animación de salida
+    _exitAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _exitController, curve: Curves.easeOut),
+    );
+    //* Iniciar animación de entrada
+    _entryController.forward();
+
+    //* Iniciar cargas
+    _initLoad();
     WidgetsBinding.instance.addPostFrameCallback((_){
       _hideSplash();
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedSplashScreen.withScreenFunction(
-      curve: Curves.easeInOut,
-      duration: 3000,
-      pageTransitionType: PageTransitionType.topToBottom,
-      splashTransition: SplashTransition.slideTransition,
-      splash: 'assets/images/logo.png',
-      screenFunction: () async {
-        await _initLoad();
-        return const PlayerScreen();
-      },
+  void dispose() {
+    _entryController.dispose();
+    _exitController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context){
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: FadeTransition(
+        opacity: _exitAnimation,
+        child: FadeTransition(
+          opacity: _entryAnimation,
+          child: Container(
+            color: Colors.white,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: size.width * .4,
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
