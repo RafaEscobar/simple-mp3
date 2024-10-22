@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_mp3/services/custom_string_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class ControlsPlayer extends StatefulWidget {
@@ -65,21 +65,23 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     ),
                 ),
                 const SizedBox(width: 10,),
-                (appProviderRead.currentSong.title.isNotEmpty) ?
-                  Text(
-                    CustomStringService.cropTitle(data: appProviderRead.currentSong.title, length: 14),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ) :
-                  const Text(
-                    "Reproduce una canción",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400
-                    ),
-                  )
+                Marquee(
+                  text: appProviderRead.currentSong.title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400
+                  ),
+                  scrollAxis: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  blankSpace: 20.0,
+                  velocity: 100.0,
+                  pauseAfterRound: const Duration(seconds: 1),
+                  startPadding: 10.0,
+                  accelerationDuration: const Duration(seconds: 1),
+                  accelerationCurve: Curves.linear,
+                  decelerationDuration: const Duration(milliseconds: 500),
+                  decelerationCurve: Curves.easeOut,
+                )
               ],
             ),
           ),
