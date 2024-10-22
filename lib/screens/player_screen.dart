@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/screens/navigation/tabs_navigator.dart';
 import 'package:simple_mp3/services/alert_service.dart';
@@ -18,6 +19,7 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   late PermissionStatus showNoPermission;
+  late AudioPlayer _audioPlayer;
 
   Future<void> requestPermissionAgain() async {
     if (PreferencesService.storagePermissionResponse.isPermanentlyDenied) {
@@ -31,8 +33,24 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   void initState() {
+    _audioPlayer = AudioPlayer();
     super.initState();
     showNoPermission = PreferencesService.storagePermissionResponse;
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _playMusic(String path) async {
+    try {
+      await _audioPlayer.setFilePath(path);
+      _audioPlayer.play();
+    } catch (e) {
+      AlertService.showBasicAlert("Error: ${e.toString()}");
+    }
   }
 
   @override
@@ -63,7 +81,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
           )
         )
       ),
-      bottomNavigationBar: ControlsPlayer(height: size.height, musicName: 'Nombre de la...')
+      bottomNavigationBar: ControlsPlayer(
+        height: size.height,
+        playMusic: _playMusic,
+      )
     );
   }
 }

@@ -7,7 +7,8 @@ class AppProvider extends ChangeNotifier{
   Song _currentSong = Song(
     artist: '',
     duration: '',
-    title: ''
+    title: '',
+    path: ''
   );
 
   bool get hasShownSplash => _hasShownSplash;

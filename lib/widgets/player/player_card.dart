@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/custom_string_service.dart';
+import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class PlayerCard extends StatefulWidget {
   final Size size;
@@ -19,9 +21,10 @@ class PlayerCard extends StatefulWidget {
 class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
+    AppProvider appProviderRead = context.read<AppProvider>();
     return GestureDetector(
       onTap: () {
-        
+        appProviderRead.currentSong = widget.song;
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
