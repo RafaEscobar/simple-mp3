@@ -68,7 +68,7 @@ class MusicUseCase {
     Directory rootDir = Directory('/storage/emulated/0');
     //* Llamamos por primera vez a la función recursiva
     await listFiles(rootDir);
-    AppProvider appProviderReader = MyApp.navigatorKey.currentContext!.read<AppProvider>();
+    AppProvider appProviderReader = navigatorKey.currentContext!.read<AppProvider>();
     appProviderReader.songList = paths;
   }
 }

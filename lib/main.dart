@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/routes/app_route.dart';
-import 'package:simple_mp3/screens/load_screen.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PreferencesService.init();
@@ -12,7 +12,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   const MyApp({super.key});
 
   @override
@@ -22,11 +21,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppProvider(),)
       ],
       builder: (_, __) {
-        return MaterialApp(
-          navigatorKey: navigatorKey,
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          home: const LoadScreen(),
-          routes: AppRoute.routes,
+          routerConfig: AppRoute.getGoRoutes(navigatorKey),
         );
       },
     );
