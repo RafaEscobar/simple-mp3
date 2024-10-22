@@ -5,7 +5,7 @@ import 'package:simple_mp3/main.dart';
 class AlertService {
   static void showBasicAlert(String message){
     showModalBottomSheet(
-      context: navigatorKey.currentContext!,
+      context: MyApp.navigatorKey.currentContext!,
       builder: (context) {
         return Container(
           color: Colors.greenAccent,

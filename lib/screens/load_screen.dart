@@ -1,6 +1,6 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
@@ -19,19 +19,11 @@ class LoadScreen extends StatefulWidget{
 
 class _LoadScreenState extends State<LoadScreen> {
   Future<void> _initLoad() async {
-    /*
-      * Validamos:
-        * - SI el usuario acepto que la aplicación pueda acceder al almacenamiento del dispositivo procedera con la busqueda de las canciones
-        * - SI NO acepta se le redireccionara a otra screen en donde se le muestre un mensaje indicando que si no acepta no podra escuhar sus canciones
-    */
-      //* Función que lanza la solicitud de permiso
     if (!PreferencesService.storagePermissionResponse.isGranted){
       await PermissionService.requestAccessToStorage();
       PreferencesService.firstLogin = false;
     }
-    await Future.delayed(const Duration(seconds: 2));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-    if (mounted) context.pushNamed(PlayerScreen.routeName);
   }
 
   void _hideSplash(){
@@ -42,30 +34,23 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1), _initLoad);
     WidgetsBinding.instance.addPostFrameCallback((_){
       _hideSplash();
     });
   }
 
   @override
-  Widget build(BuildContext context){
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: size.width * .4,
-                child: Image.asset('assets/images/logo.png'),
-              ),
-            ],
-          ),
-        ),
-      ),
+  Widget build(BuildContext context) {
+    return AnimatedSplashScreen.withScreenFunction(
+      curve: Curves.easeInOut,
+      duration: 3000,
+      pageTransitionType: PageTransitionType.topToBottom,
+      splashTransition: SplashTransition.slideTransition,
+      splash: 'assets/images/logo.png',
+      screenFunction: () async {
+        await _initLoad();
+        return const PlayerScreen();
+      },
     );
   }
 }
