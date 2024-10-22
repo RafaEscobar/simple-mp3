@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/screens/navigation/tabs_navigator.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
+import 'package:simple_mp3/widgets/player/player_header.dart';
+import 'package:simple_mp3/widgets/player/controls_player.dart';
 import 'package:simple_mp3/widgets/empty_state.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -34,34 +37,33 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context){
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: (showNoPermission.isGranted) ?
         Container(
           color: Colors.white,
-          child: const Center(child:  Text('AQUI IRA EL REPRODUCTOR DE MUSICA...'))
-        ) :
-        Center(
-          child: SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: EmptyState(
-                    lottiePath: 'assets/animations/empty_state.json',
-                    title: 'Necesitamos permiso para buscar música en tu dispositivo'
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: requestPermissionAgain,
-                  child: const Text('Conceder permiso')
+          child: const Column(
+            children: [
+              PlayerHeader(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: TabsNavigator()
                 )
-              ],
-            ),
-          ),
+              )
+            ],
+          )
+        ) :
+        EmptyState(
+          lottiePath: 'assets/animations/empty_state.json',
+          title: 'Necesitamos permiso para buscar música en tu dispositivo',
+          body: ElevatedButton(
+            onPressed: requestPermissionAgain,
+            child: const Text('Conceder permiso')
+          )
         )
       ),
+      bottomNavigationBar: ControlsPlayer(height: size.height, musicName: 'Nombre de la...')
     );
   }
 }

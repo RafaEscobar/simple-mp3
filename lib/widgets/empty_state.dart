@@ -5,18 +5,22 @@ class EmptyState extends StatelessWidget{
   final String lottiePath;
   final String title;
   final String subtitle;
+  final Widget? body;
   const EmptyState({
     super.key,
     required this.lottiePath,
     required this.title,
-    this.subtitle = ''
+    this.subtitle = '',
+    this.body
   });
 
 
   @override
   Widget build(BuildContext context){
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(lottiePath),
           const SizedBox(height: 10,),
@@ -35,7 +39,9 @@ class EmptyState extends StatelessWidget{
               fontSize: 14,
               fontWeight: FontWeight.w200
             ),
-          )
+          ),
+          const SizedBox(height: 20,),
+          body ?? Container()
         ],
       ),
     );
