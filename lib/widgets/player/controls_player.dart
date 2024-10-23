@@ -38,49 +38,50 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
         children: [
           SizedBox(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (appProviderRead.currentSong.coverPage == null) ?
-                const Icon(
-                  Ionicons.musical_note_outline,
-                  color: Colors.black,
-                  size: 40,
-                ) :
-                Container(
-                  width: widget.size.height * .08,
+                SizedBox(
+                  width: widget.size.width * .18,
                   height: widget.size.height * .08,
-                  decoration: BoxDecoration(
-                    boxShadow: const[
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(0, 5)
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Image.memory(
-                      appProviderRead.currentSong.coverPage!,
-                      fit: BoxFit.cover,
+                  child: (appProviderRead.currentSong.coverPage == null) ?
+                  const Icon(
+                    Ionicons.musical_note_outline,
+                    color: Colors.black,
+                    size: 40,
+                  ) :
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: const[
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5)
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(6),
                     ),
-                ),
-                const SizedBox(width: 10,),
-                Marquee(
-                  text: appProviderRead.currentSong.title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.memory(
+                        appProviderRead.currentSong.coverPage!,
+                        fit: BoxFit.cover,
+                      ),
                   ),
-                  scrollAxis: Axis.horizontal,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  blankSpace: 20.0,
-                  velocity: 100.0,
-                  pauseAfterRound: const Duration(seconds: 1),
-                  startPadding: 10.0,
-                  accelerationDuration: const Duration(seconds: 1),
-                  accelerationCurve: Curves.linear,
-                  decelerationDuration: const Duration(milliseconds: 500),
-                  decelerationCurve: Curves.easeOut,
+                ),
+                SizedBox(width: widget.size.width * .02,),
+                SizedBox(
+                  width: widget.size.width * .32,
+                  height: widget.size.height * .1,
+                  child: Marquee(
+                    text: appProviderRead.currentSong.title.isNotEmpty
+                      ? appProviderRead.currentSong.title
+                      : "Reproduce una canción",
+                      scrollAxis: Axis.horizontal,
+                      blankSpace: 10.0,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400
+                      ),
+                  ),
                 )
               ],
             ),
@@ -89,31 +90,34 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
             child: Row(
               children: [
                 IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
 
                   },
                   icon: const Icon(
                     Ionicons.play_back_circle_outline,
-                    size: 40,
+                    size: 38,
                   )
                 ),
                 IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () async {
                     widget.playMusic(appProviderRead.currentSong.path);
                   },
                   icon: const Icon(
                     Ionicons.play_circle_outline,
-                    size: 40,
+                    size: 38,
                   ),
                 ),
 
                 IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
 
                   },
                   icon: const Icon(
                     Ionicons.play_forward_circle_outline,
-                    size: 40,
+                    size: 38,
                   ),
                 )
               ],
