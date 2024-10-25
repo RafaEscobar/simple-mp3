@@ -18,6 +18,17 @@ class ControlsPlayer extends StatefulWidget {
 }
 
 class _ControlsPlayerState extends State<ControlsPlayer> {
+  Widget buildMarque(String title){
+    return Marquee(
+      text: title,
+        scrollAxis: Axis.horizontal,
+        blankSpace: 40.0,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400
+        ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.watch<AppProvider>();
@@ -71,17 +82,16 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 SizedBox(
                   width: widget.size.width * .32,
                   height: widget.size.height * .1,
-                  child: Marquee(
-                    text: appProviderRead.currentSong.title.isNotEmpty
-                      ? appProviderRead.currentSong.title
-                      : "Reproduce una canción",
-                      scrollAxis: Axis.horizontal,
-                      blankSpace: 10.0,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400
-                      ),
-                  ),
+                  child: (appProviderRead.currentSong.title.isEmpty) ?
+                    buildMarque('Reproduce una canción') :
+                    (appProviderRead.currentSong.title.length > 14) ?
+                      buildMarque(appProviderRead.currentSong.title) :
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          appProviderRead.currentSong.title,
+                        ),
+                      )
                 )
               ],
             ),
