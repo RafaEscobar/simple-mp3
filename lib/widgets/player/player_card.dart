@@ -27,6 +27,7 @@ class _PlayerCardState extends State<PlayerCard> {
         appProviderRead.currentSong = widget.song;
       },
       child: Container(
+        color: Colors.transparent,
         margin: const EdgeInsets.only(bottom: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
