@@ -28,7 +28,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
       await PermissionService.requestAccessToStorage();
       PreferencesService.firstLogin = false;
     }
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 500));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
     //* Inicia animación de salida
     _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
@@ -45,7 +45,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     //* Inicializando controlador de animación de entrada
     _entryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 400),
     );
     //* Inicializando controlador de animación de salida
     _exitController = AnimationController(

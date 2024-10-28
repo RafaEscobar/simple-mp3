@@ -52,6 +52,12 @@ class _PlayerCardState extends State<PlayerCard> {
                     child: Image.memory(
                       widget.song.coverPage!,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/album_default.jpg',
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 10,),
