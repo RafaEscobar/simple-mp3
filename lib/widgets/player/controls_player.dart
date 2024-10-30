@@ -83,9 +83,12 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: Image.memory(
-                        appProviderRead.currentSong.coverPage!,
-                        fit: BoxFit.cover,
-                      ),
+                      appProviderRead.currentSong.coverPage!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('assets/images/album_default.jpg', fit: BoxFit.cover);
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(width: widget.size.width * .02,),

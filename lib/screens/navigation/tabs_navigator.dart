@@ -37,7 +37,6 @@ class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateM
             tabMaxLength: 100,
             borderRadius: BorderRadius.circular(10),
             tabBorderRadius: BorderRadius.circular(10),
-            childPadding: const EdgeInsets.all(20.0),
             selectedTextStyle: const TextStyle(
               color: Colors.white,
               fontSize: 15.0,
