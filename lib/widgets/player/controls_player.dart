@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_mp3/services/player_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class ControlsPlayer extends StatefulWidget {
-  final Size size;
-  final Function(String) playMusic;
-  const ControlsPlayer({
-    super.key,
-    required this.size,
-    required this.playMusic,
-  });
+  const ControlsPlayer({super.key});
 
   @override
   State<ControlsPlayer> createState() => _ControlsPlayerState();
@@ -42,9 +37,10 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.watch<AppProvider>();
+    Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      height: widget.size.height * .12,
+      height: size.height * .12,
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -62,8 +58,8 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: widget.size.width * .18,
-                  height: widget.size.height * .08,
+                  width: size.width * .18,
+                  height: size.height * .08,
                   child: (appProviderRead.currentSong.coverPage == null) ?
                   const Icon(
                     Ionicons.musical_note_outline,
@@ -91,10 +87,10 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     ),
                   ),
                 ),
-                SizedBox(width: widget.size.width * .02,),
+                SizedBox(width: size.width * .02,),
                 SizedBox(
-                  width: widget.size.width * .32,
-                  height: widget.size.height * .1,
+                  width: size.width * .32,
+                  height: size.height * .1,
                   child: buildTitle(appProviderRead.currentSong.title)
                 )
               ],
@@ -115,9 +111,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () async {
-                    widget.playMusic(appProviderRead.currentSong.path);
-                  },
+                  onPressed: () async => PlayerService.playMusic(appProviderRead.currentSong.path),
                   icon: const Icon(
                     Ionicons.play_circle_outline,
                     size: 38,
