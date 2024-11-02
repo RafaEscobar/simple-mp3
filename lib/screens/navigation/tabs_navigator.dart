@@ -14,6 +14,11 @@ class TabsNavigator extends StatefulWidget {
 
 class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateMixin{
   late final TabController _controller;
+  List<Color>  backColors = const [
+  Color(0xFFB0E0E6),
+  Color(0xFFADD8E6),
+  Color(0xFFAFEEEE),
+  ];
 
   @override
   void initState() {
@@ -45,35 +50,16 @@ class _TabsNavigatorState extends State<TabsNavigator> with TickerProviderStateM
               color: Colors.black,
               fontSize: 13.0,
             ),
-            colors: const [
-              Color(0xFFB0E0E6),
-              Color(0xFFADD8E6),
-              Color(0xFFAFEEEE),
-            ],
+            colors: backColors,
             tabs: const [
-              Text(
-                'Canciones',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
-              Text(
-                'Carpetas',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
-              Text(
-                'Favoritos',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-              ),
+              Text('Canciones', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+              Text('Carpetas',style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+              Text('Favoritos',style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
             ],
             children: const [
-              SizedBox(
-                child: SongsScreen(),
-              ),
-              SizedBox(
-                child: DirectoriesScreen(),
-              ),
-              SizedBox(
-                child: FavoritesScreen(),
-              ),
+              SizedBox(child: SongsScreen(),),
+              SizedBox(child: DirectoriesScreen(),),
+              SizedBox(child: FavoritesScreen(),),
             ],
           );
         }

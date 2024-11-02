@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 
 class Song {
@@ -31,5 +30,4 @@ class Song {
     duration: json['duration'] ?? '',
     coverPage: Uint8List.fromList(json['coverPage'].cast<int>()),
   );
-
 }
