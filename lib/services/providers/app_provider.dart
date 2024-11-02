@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_mp3/models/song.dart';
+import 'package:simple_mp3/services/preferences_service.dart';
 
 class AppProvider extends ChangeNotifier{
   bool _hasShownSplash = false;
@@ -7,30 +8,33 @@ class AppProvider extends ChangeNotifier{
   Song _currentSong = Song(
     artist: '',
     duration: '',
-    title: ''
+    title: '',
+    path: '',
   );
 
   bool get hasShownSplash => _hasShownSplash;
-  List<Song> get songList => _songList;
-  Song get currentSong => _currentSong;
-
   set hasShownSplash(bool newValue){
     _hasShownSplash = newValue;
     notifyListeners();
   }
 
+  List<Song> get songList => _songList;
   set songList(List<Song> newList){
     _songList = newList;
     notifyListeners();
   }
 
+  Song get currentSong => _currentSong;
   set currentSong(Song newSong){
     _currentSong = newSong;
+    PreferencesService.setCurrentSong(newSong);
     notifyListeners();
   }
 
   void clean(){
     _hasShownSplash = false;
+    _songList = [];
+    _currentSong = Song(artist: '', duration: '', title: '', path: '');
     notifyListeners();
   }
 }

@@ -16,18 +16,19 @@ class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.read<AppProvider>();
-    Size size = MediaQuery.of(context).size;
     return SizedBox(
       child: Column(
         children: [
-          const ToolsRow(),
-          const SizedBox(height: 20,),
+          const Padding(
+            padding: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 4),
+            child: ToolsRow()
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: appProviderRead.songList.length,
               itemBuilder: (context, index) {
                 Song currentSong = appProviderRead.songList[index];
-                return PlayerCard(size: size, song: currentSong,);
+                return PlayerCard(song: currentSong,);
               },
             ),
           )

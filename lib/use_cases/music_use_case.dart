@@ -51,7 +51,8 @@ class MusicUseCase {
               title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
               artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
               duration: metadata.trackDuration.toString(),
-              coverPage: metadata.albumArt ?? defaultImage
+              coverPage: metadata.albumArt ?? defaultImage,
+              path: metadata.filePath ?? '',
             );
 
             //* Agregamos el path de la canción a nuestro listado final de paths

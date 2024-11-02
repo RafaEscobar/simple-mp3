@@ -26,10 +26,7 @@ class AppRoute {
       navigatorKey: navigatorKey,
       redirect: (context, state) {
         AppProvider providerReader = context.read<AppProvider>();
-        if (providerReader.hasShownSplash && state.matchedLocation == '/') {
-          return "/${PlayerScreen.routeName}";
-        }
-        return null;
+        return (providerReader.hasShownSplash && state.matchedLocation == '/') ? "/${PlayerScreen.routeName}" : null;
       },
     );
   }

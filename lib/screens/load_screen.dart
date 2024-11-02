@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_mp3/main.dart';
+import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
@@ -24,54 +28,52 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
   late Animation<double> _exitAnimation;
 
   Future<void> _initLoad() async {
-    if (!PreferencesService.storagePermissionResponse.isGranted){
-      await PermissionService.requestAccessToStorage();
-      PreferencesService.firstLogin = false;
-    }
-    await Future.delayed(const Duration(seconds: 1));
+    //* Solicitar permiso
+    await _requestAccessToStorage();
+    //* Verificación de primer acceso a la app
+    if (PreferencesService.firstLogin) PreferencesService.firstLogin = false;
+    //* Retrazo inicial para splash
+    await Future.delayed(const Duration(milliseconds: 600));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+    //* Setamos la última canción reproducida
+    if (PreferencesService.currentSong.isNotEmpty) navigatorKey.currentContext!.read<AppProvider>().currentSong = Song.fromJson(jsonDecode(PreferencesService.currentSong));
     //* Inicia animación de salida
     _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
   }
 
+  Future<void> _requestAccessToStorage() async {
+    //* Si ya se dio el permiso de acceso al almacenamiento ya no se vuelve a solicitar
+    if (PreferencesService.storagePermissionResponse.isGranted) return;
+    await PermissionService.requestAccessToStorage();
+  }
+
   void _hideSplash(){
     AppProvider providerReader = context.read<AppProvider>();
-    if (!providerReader.hasShownSplash) providerReader.hasShownSplash = true;
+    //* Si aun no se muestra la splash mostrarla (evita mostrar la splash cada que surge un cambio)
+    if (!providerReader.hasShownSplash) context.read<AppProvider>().hasShownSplash = true;
   }
 
   @override
   void initState() {
     super.initState();
-    //* Inicializando controlador de animación de entrada
-    _entryController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 700),
-    );
-    //* Inicializando controlador de animación de salida
-    _exitController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    );
-    //* Animación de entrada
-    _entryAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _entryController, curve: Curves.easeIn),
-    );
-    //* Animación de salida
-    _exitAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(parent: _exitController, curve: Curves.easeOut),
-    );
+    //* Inicializando controladores de animación de entrada y salida
+    _entryController = AnimationController(vsync: this,duration: const Duration(milliseconds: 500));
+    _exitController = AnimationController(vsync: this,duration: const Duration(milliseconds: 600));
+    //* Animación de entrada y salida
+    _entryAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _entryController, curve: Curves.easeIn));
+    _exitAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(parent: _exitController, curve: Curves.easeOut),);
     //* Iniciar animación de entrada
     _entryController.forward();
-
     //* Iniciar cargas
-    _initLoad();
     WidgetsBinding.instance.addPostFrameCallback((_){
+      _initLoad();
       _hideSplash();
     });
   }
 
   @override
   void dispose() {
+    //* Liberamos los controladores de las animaciones de entrada y salida
     _entryController.dispose();
     _exitController.dispose();
     super.dispose();
