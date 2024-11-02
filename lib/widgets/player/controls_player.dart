@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/services/player_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/widgets/player/title_control_widget.dart';
 
 class ControlsPlayer extends StatefulWidget {
   const ControlsPlayer({super.key});
@@ -13,27 +13,6 @@ class ControlsPlayer extends StatefulWidget {
 }
 
 class _ControlsPlayerState extends State<ControlsPlayer> {
-  Widget buildMarquee(String title){
-    return Marquee(
-      text: title,
-        scrollAxis: Axis.horizontal,
-        blankSpace: 40.0,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w400
-        ),
-    );
-  }
-  Widget buildTitle(String title){
-    return (title.isEmpty) ?
-      buildMarquee('Reproduce una canción') :
-      (title.length > 14) ?
-        buildMarquee(title) :
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(title,),
-        );
-  }
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.watch<AppProvider>();
@@ -91,7 +70,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 SizedBox(
                   width: size.width * .32,
                   height: size.height * .1,
-                  child: buildTitle(appProviderRead.currentSong.title)
+                  child: TitleControlWidget(title: appProviderRead.currentSong.title)
                 )
               ],
             ),
@@ -101,9 +80,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
               children: [
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {
-
-                  },
+                  onPressed: () => (),
                   icon: const Icon(
                     Ionicons.play_back_circle_outline,
                     size: 38,
@@ -117,7 +94,6 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     size: 38,
                   ),
                 ),
-
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
