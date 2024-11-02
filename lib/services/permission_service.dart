@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:simple_mp3/main.dart';
 import 'package:simple_mp3/services/alert_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 
@@ -7,12 +9,17 @@ class PermissionService {
   static Future<void> requestAccessToStorage() async => PreferencesService.storagePermissionResponse = await Permission.storage.request();
 
   static Future<void> requestPermissionAgain() async {
-    if (PreferencesService.storagePermissionResponse.isPermanentlyDenied) {
-      AlertService.showBasicAlert('A continuación seras redirigido a la configuración de la aplicación, ahi podras conceder el permiso para acceder al almacenamiento interno');
-      await Future.delayed(const Duration(seconds: 5));
-      openAppSettings();
-    } else {
-      await PermissionService.requestAccessToStorage();
+    try {
+      if (PreferencesService.storagePermissionResponse.isPermanentlyDenied) {
+        AlertService.showBasicAlert('A continuación seras redirigido a la configuración de la aplicación, ahi podras conceder el permiso para acceder al almacenamiento interno');
+        await Future.delayed(const Duration(seconds: 5));
+        openAppSettings();
+      } else {
+        await PermissionService.requestAccessToStorage();
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(SnackBar(content: Text(e.toString())));
+      throw Exception(e.toString());
     }
   }
 }

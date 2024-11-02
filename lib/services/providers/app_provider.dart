@@ -13,19 +13,18 @@ class AppProvider extends ChangeNotifier{
   );
 
   bool get hasShownSplash => _hasShownSplash;
-  List<Song> get songList => _songList;
-  Song get currentSong => _currentSong;
-
   set hasShownSplash(bool newValue){
     _hasShownSplash = newValue;
     notifyListeners();
   }
 
+  List<Song> get songList => _songList;
   set songList(List<Song> newList){
     _songList = newList;
     notifyListeners();
   }
 
+  Song get currentSong => _currentSong;
   set currentSong(Song newSong){
     _currentSong = newSong;
     PreferencesService.setCurrentSong(newSong);
@@ -34,6 +33,8 @@ class AppProvider extends ChangeNotifier{
 
   void clean(){
     _hasShownSplash = false;
+    _songList = [];
+    _currentSong = Song(artist: '', duration: '', title: '', path: '');
     notifyListeners();
   }
 }

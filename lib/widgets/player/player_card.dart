@@ -6,11 +6,9 @@ import 'package:simple_mp3/services/custom_string_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class PlayerCard extends StatefulWidget {
-  final Size size;
   final Song song;
   const PlayerCard({
     super.key,
-    required this.size,
     required this.song
   });
 
@@ -22,6 +20,7 @@ class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.read<AppProvider>();
+    Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
       decoration: const BoxDecoration(borderRadius: BorderRadius.zero,),
@@ -39,8 +38,8 @@ class _PlayerCardState extends State<PlayerCard> {
                   child: Row(
                     children: [
                       Container(
-                        width: widget.size.height * .08,
-                        height: widget.size.height * .08,
+                        width: size.height * .08,
+                        height: size.height * .08,
                         decoration: BoxDecoration(
                           boxShadow: const[
                             BoxShadow(

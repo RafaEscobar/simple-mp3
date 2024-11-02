@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:simple_mp3/services/alert_service.dart';
+import 'package:simple_mp3/main.dart';
 
 class PlayerService {
   static final  AudioPlayer _audioPlayer = AudioPlayer();
@@ -9,7 +10,7 @@ class PlayerService {
       await _audioPlayer.setFilePath(path);
       _audioPlayer.play();
     } catch (e) {
-      AlertService.showBasicAlert("Error: ${e.toString()}");
+      ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 }
