@@ -33,7 +33,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     //* Verificación de primer acceso a la app
     if (PreferencesService.firstLogin) PreferencesService.firstLogin = false;
     //* Retrazo inicial para splash
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 700));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
     //* Setamos la última canción reproducida
     if (PreferencesService.currentSong.isNotEmpty) navigatorKey.currentContext!.read<AppProvider>().currentSong = Song.fromJson(jsonDecode(PreferencesService.currentSong));
@@ -57,8 +57,8 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //* Inicializando controladores de animación de entrada y salida
-    _entryController = AnimationController(vsync: this,duration: const Duration(milliseconds: 400));
-    _exitController = AnimationController(vsync: this,duration: const Duration(milliseconds: 900));
+    _entryController = AnimationController(vsync: this,duration: const Duration(milliseconds: 600));
+    _exitController = AnimationController(vsync: this,duration: const Duration(milliseconds: 600));
     //* Animación de entrada y salida
     _entryAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _entryController, curve: Curves.easeIn));
     _exitAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(parent: _exitController, curve: Curves.easeOut),);
