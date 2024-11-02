@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_mp3/main.dart';
+import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
@@ -30,6 +34,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     }
     await Future.delayed(const Duration(milliseconds: 500));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+    if (PreferencesService.currentSong.isNotEmpty) navigatorKey.currentContext!.read<AppProvider>().currentSong = Song.fromJson(jsonDecode(PreferencesService.currentSong));
     //* Inicia animación de salida
     _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
   }

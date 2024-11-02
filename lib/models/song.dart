@@ -15,4 +15,21 @@ class Song {
     this.path = '',
     this.coverPage,
   });
+
+  Map<String, dynamic> toJson() => {
+    'title': title,
+    'artist': artist,
+    'duration': duration,
+    'coverPage': coverPage,
+    'path': path
+  };
+
+  factory Song.fromJson(Map<String, dynamic> json) => Song(
+    title: json['title'] ?? '',
+    artist: json['artist'] ?? '',
+    path: json['path'] ?? '',
+    duration: json['duration'] ?? '',
+    coverPage: Uint8List.fromList(json['coverPage'].cast<int>()),
+  );
+
 }

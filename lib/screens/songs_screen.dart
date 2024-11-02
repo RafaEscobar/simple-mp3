@@ -20,8 +20,10 @@ class _SongsScreenState extends State<SongsScreen> {
     return SizedBox(
       child: Column(
         children: [
-          const ToolsRow(),
-          const SizedBox(height: 20,),
+          const Padding(
+            padding: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 4),
+            child: ToolsRow()
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: appProviderRead.songList.length,
