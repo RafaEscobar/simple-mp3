@@ -88,8 +88,11 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () async => PlayerService.playMusic(appProviderRead.currentSong.path),
-                  icon: const Icon(
+                  onPressed: () async {
+                    PlayerService.toogleMusic(isStopping: true);
+                  },
+                  icon: Icon(
+                    appProviderRead.isReproducing ? Ionicons.pause_circle_outline :
                     Ionicons.play_circle_outline,
                     size: 38,
                   ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 
 class AppProvider extends ChangeNotifier{
   bool _hasShownSplash = false;
+  bool _isReproducing = false;
   List<Song> _songList = [];
   Song _currentSong = Song(
     artist: '',
@@ -11,6 +13,14 @@ class AppProvider extends ChangeNotifier{
     title: '',
     path: '',
   );
+  final  AudioPlayer _audioPlayer = AudioPlayer();
+
+  AudioPlayer get audioPlayer => _audioPlayer;
+  bool get isReproducing => _isReproducing;
+  set isReproducing(bool newValue){
+    _isReproducing = newValue;
+    notifyListeners();
+  }
 
   bool get hasShownSplash => _hasShownSplash;
   set hasShownSplash(bool newValue){
@@ -28,6 +38,7 @@ class AppProvider extends ChangeNotifier{
   set currentSong(Song newSong){
     _currentSong = newSong;
     PreferencesService.setCurrentSong(newSong);
+    _audioPlayer.setFilePath(_currentSong.path);
     notifyListeners();
   }
 
