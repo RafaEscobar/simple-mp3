@@ -9,9 +9,11 @@ import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class PlayerCard extends StatefulWidget {
   final Song song;
+  final int index;
   const PlayerCard({
     super.key,
-    required this.song
+    required this.song,
+    required this.index
   });
 
   @override
@@ -33,7 +35,8 @@ class _PlayerCardState extends State<PlayerCard> {
           splashColor: Colors.white,
           onTap: () {
             appProviderRead.currentSong = widget.song;
-            PlayerService.toogleMusic();
+            appProviderRead.currentIndex = widget.index;
+            PlayerService.toogleMusic(index: widget.index);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

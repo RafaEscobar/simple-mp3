@@ -80,7 +80,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
               children: [
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () => (),
+                  onPressed: () async => await appProviderRead.audioPlayer.seekToPrevious(),
                   icon: const Icon(
                     Ionicons.play_back_circle_outline,
                     size: 38,
@@ -89,7 +89,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () async {
-                    PlayerService.toogleMusic(isStopping: true);
+                    PlayerService.toogleMusic(isStopping: true, index: appProviderRead.currentIndex);
                   },
                   icon: Icon(
                     appProviderRead.isReproducing ? Ionicons.pause_circle_outline :
@@ -99,9 +99,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {
-
-                  },
+                  onPressed: () async => await appProviderRead.audioPlayer.seekToNext(),
                   icon: const Icon(
                     Ionicons.play_forward_circle_outline,
                     size: 38,

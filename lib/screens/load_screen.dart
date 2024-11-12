@@ -11,6 +11,7 @@ import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
+import 'package:simple_mp3/use_cases/playlist_use_case.dart';
 
 class LoadScreen extends StatefulWidget{
   static const String routeName = 'load-screen';
@@ -35,6 +36,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     //* Retrazo inicial para splash
     await Future.delayed(const Duration(milliseconds: 600));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
+    if (navigatorKey.currentContext!.read<AppProvider>().songList.isNotEmpty) PlaylistUseCase.buildPlayList();
     //* Setamos la última canción reproducida
     if (PreferencesService.currentSong.isNotEmpty) navigatorKey.currentContext!.read<AppProvider>().currentSong = Song.fromJson(jsonDecode(PreferencesService.currentSong));
     //* Inicia animación de salida

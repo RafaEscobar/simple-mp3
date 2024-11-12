@@ -6,21 +6,29 @@ import 'package:simple_mp3/services/providers/app_provider.dart';
 class PlayerService {
   static final AppProvider _readProvider = navigatorKey.currentContext!.read<AppProvider>();
 
-  static Future<void> toogleMusic({bool? isStopping = false}) async {
+  static Future<void> toogleMusic({bool isStopping = false, required int index}) async {
     try {
-      if (!_readProvider.isReproducing) {
-        _readProvider.audioPlayer.play();
-        _readProvider.isReproducing = true;
+      if (!isStopping) {
+          _readProvider.audioPlayer.seek(
+            Duration.zero,
+            index: index
+          );
+          _readProvider.audioPlayer.play();
+          _readProvider.isReproducing = true;
       } else {
-        if (isStopping!) {
+        if (_readProvider.isReproducing) {
+           _readProvider.isReproducing = false;
           _readProvider.audioPlayer.pause();
-          _readProvider.isReproducing = false;
         } else {
           _readProvider.audioPlayer.play();
+          _readProvider.isReproducing = true;
         }
       }
     } catch (e) {
       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
+
+  static Future<void> nextSong() async => _readProvider.audioPlayer.seekToNext();
+  static Future<void> previoudSong() async => _readProvider.audioPlayer.seekToPrevious();
 }

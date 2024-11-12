@@ -13,9 +13,26 @@ class AppProvider extends ChangeNotifier{
     title: '',
     path: '',
   );
+  int _currenteIndex = 0;
+  ConcatenatingAudioSource _playList = ConcatenatingAudioSource(
+    children: []
+  );
   final  AudioPlayer _audioPlayer = AudioPlayer();
 
   AudioPlayer get audioPlayer => _audioPlayer;
+
+  int get currentIndex => _currenteIndex;
+  set currentIndex(int newValue){
+    _currenteIndex = newValue;
+    notifyListeners();
+  }
+
+  ConcatenatingAudioSource get playList => _playList;
+  set playList(ConcatenatingAudioSource newValue){
+    _playList = newValue;
+    notifyListeners();
+  }
+
   bool get isReproducing => _isReproducing;
   set isReproducing(bool newValue){
     _isReproducing = newValue;
