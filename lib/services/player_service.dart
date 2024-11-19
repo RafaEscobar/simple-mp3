@@ -8,6 +8,9 @@ class PlayerService {
 
   static Future<void> toogleMusic({bool isStopping = false, required int index}) async {
     try {
+
+      /*
+      print(_readProvider.audioPlayer);
       if (!isStopping) {
           _readProvider.audioPlayer.seek(
             Duration.zero,
@@ -24,6 +27,7 @@ class PlayerService {
           _readProvider.isReproducing = true;
         }
       }
+      */
     } catch (e) {
       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(SnackBar(content: Text(e.toString())));
     }

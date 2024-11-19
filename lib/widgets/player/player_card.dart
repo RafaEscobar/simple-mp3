@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/custom_string_service.dart';
-import 'package:simple_mp3/services/player_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class PlayerCard extends StatefulWidget {
@@ -33,10 +32,12 @@ class _PlayerCardState extends State<PlayerCard> {
         color: Colors.transparent,
         child: InkWell(
           splashColor: Colors.white,
-          onTap: () {
-            appProviderRead.currentSong = widget.song;
-            appProviderRead.currentIndex = widget.index;
-            PlayerService.toogleMusic(index: widget.index);
+          onTap: () async {
+            appProviderRead.audioPlayer.seek(
+              Duration.zero,
+              index: widget.index
+            );
+            await appProviderRead.audioPlayer.play();
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -74,7 +75,7 @@ class _PlayerCardState extends State<PlayerCard> {
                             ),
                           ),
                           Visibility(
-                            visible: (appProviderWatch.isReproducing && widget.song.path == appProviderWatch.currentSong.path),
+                            visible: (appProviderWatch.isReproducing),
                             child: Positioned.fill(
                               child: Center(
                                 child: Lottie.asset('assets/animations/reproducing.json'),

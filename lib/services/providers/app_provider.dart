@@ -1,31 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:simple_mp3/models/song.dart';
-import 'package:simple_mp3/services/preferences_service.dart';
 
 class AppProvider extends ChangeNotifier{
   bool _hasShownSplash = false;
   bool _isReproducing = false;
   List<Song> _songList = [];
-  Song _currentSong = Song(
-    artist: '',
-    duration: '',
-    title: '',
-    path: '',
-  );
-  int _currenteIndex = 0;
   ConcatenatingAudioSource _playList = ConcatenatingAudioSource(
     children: []
   );
   final  AudioPlayer _audioPlayer = AudioPlayer();
 
   AudioPlayer get audioPlayer => _audioPlayer;
-
-  int get currentIndex => _currenteIndex;
-  set currentIndex(int newValue){
-    _currenteIndex = newValue;
-    notifyListeners();
-  }
 
   ConcatenatingAudioSource get playList => _playList;
   set playList(ConcatenatingAudioSource newValue){
@@ -51,18 +37,9 @@ class AppProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Song get currentSong => _currentSong;
-  set currentSong(Song newSong){
-    _currentSong = newSong;
-    PreferencesService.setCurrentSong(newSong);
-    _audioPlayer.setFilePath(_currentSong.path);
-    notifyListeners();
-  }
-
   void clean(){
     _hasShownSplash = false;
     _songList = [];
-    _currentSong = Song(artist: '', duration: '', title: '', path: '');
     notifyListeners();
   }
 }
