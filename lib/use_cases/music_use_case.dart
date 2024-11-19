@@ -50,7 +50,6 @@ class MusicUseCase {
             Song currentSong = Song(
               title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
               artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
-              duration: metadata.trackDuration.toString(),
               coverPage: metadata.albumArt ?? defaultImage,
               path: metadata.filePath ?? '',
             );
