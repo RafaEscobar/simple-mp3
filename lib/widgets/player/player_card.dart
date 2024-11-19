@@ -19,11 +19,20 @@ class PlayerCard extends StatefulWidget {
 }
 
 class _PlayerCardState extends State<PlayerCard> {
+
+  void playMusic() async {
+    PlayerProvider playerRead = context.read<PlayerProvider>();
+    playerRead.audioPlayer.seek(
+      Duration.zero,
+      index: widget.song.index
+    );
+    await playerRead.audioPlayer.play();
+  }
+
   @override
   Widget build(BuildContext context) {
-    PlayerProvider appProviderRead = context.read<PlayerProvider>();
-    AppProvider appProviderWatch = context.watch<AppProvider>();
     Size size = MediaQuery.of(context).size;
+    AppProvider appWatch = context.watch<AppProvider>();
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
       decoration: const BoxDecoration(borderRadius: BorderRadius.zero,),
@@ -31,13 +40,7 @@ class _PlayerCardState extends State<PlayerCard> {
         color: Colors.transparent,
         child: InkWell(
           splashColor: Colors.white,
-          onTap: () async {
-            appProviderRead.audioPlayer.seek(
-              Duration.zero,
-              index: widget.song.index
-            );
-            await appProviderRead.audioPlayer.play();
-          },
+          onTap: playMusic,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
@@ -74,7 +77,7 @@ class _PlayerCardState extends State<PlayerCard> {
                             ),
                           ),
                           Visibility(
-                            visible: (appProviderWatch.isReproducing),
+                            visible: (appWatch.isReproducing),
                             child: Positioned.fill(
                               child: Center(
                                 child: Lottie.asset('assets/animations/reproducing.json'),
