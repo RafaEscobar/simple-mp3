@@ -7,6 +7,7 @@ import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
 import 'package:simple_mp3/use_cases/playlist_use_case.dart';
 
@@ -19,6 +20,7 @@ class LoadScreen extends StatefulWidget{
 }
 
 class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
+  PlayerProvider providerRead = navigatorKey.currentContext!.read<PlayerProvider>();
   //* Controladores para animaciones de entrada y salida
   late AnimationController _entryController;
   late AnimationController _exitController;
@@ -33,7 +35,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     //* Retrazo inicial para splash
     await Future.delayed(const Duration(milliseconds: 600));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-    if (navigatorKey.currentContext!.read<AppProvider>().songList.isNotEmpty) PlaylistUseCase.buildPlayList();
+    if (providerRead.songList.isNotEmpty) PlaylistUseCase.buildPlayList();
     //* Inicia animación de salida
     _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
   }

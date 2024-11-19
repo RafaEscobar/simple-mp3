@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/main.dart';
-import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 
 class PlayerService {
-  static final AppProvider _readProvider = navigatorKey.currentContext!.read<AppProvider>();
+  static final PlayerProvider _readProvider = navigatorKey.currentContext!.read<PlayerProvider>();
 
   static Future<void> toogleMusic({bool isStopping = false, required int index}) async {
     try {

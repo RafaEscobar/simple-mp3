@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/custom_string_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 
 class PlayerCard extends StatefulWidget {
   final Song song;
@@ -22,7 +23,7 @@ class PlayerCard extends StatefulWidget {
 class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProviderRead = context.read<AppProvider>();
+    PlayerProvider appProviderRead = context.read<PlayerProvider>();
     AppProvider appProviderWatch = context.watch<AppProvider>();
     Size size = MediaQuery.of(context).size;
     return Container(

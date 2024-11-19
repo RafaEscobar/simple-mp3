@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/widgets/player/title_control_widget.dart';
 
 class ControlsPlayer extends StatefulWidget {
@@ -14,7 +15,8 @@ class ControlsPlayer extends StatefulWidget {
 class _ControlsPlayerState extends State<ControlsPlayer> {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProviderRead = context.watch<AppProvider>();
+    PlayerProvider appProviderRead = context.watch<PlayerProvider>();
+    AppProvider appProviderRead2 = context.watch<AppProvider>();
     Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -92,7 +94,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                     //*
                   },
                   icon: Icon(
-                    appProviderRead.isReproducing ? Ionicons.pause_circle_outline :
+                    appProviderRead2.isReproducing ? Ionicons.pause_circle_outline :
                     Ionicons.play_circle_outline,
                     size: 38,
                   ),

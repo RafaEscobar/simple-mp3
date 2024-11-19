@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/routes/app_route.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context){
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AppProvider(),)
+        ChangeNotifierProvider(create: (context) => AppProvider(),),
+        ChangeNotifierProvider(create: (context) => PlayerProvider())
       ],
       builder: (_, __) {
         return MaterialApp.router(

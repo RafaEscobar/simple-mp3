@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/main.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/alert_service.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/services/song_service.dart';
-import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class MusicUseCase {
     static Future<void> search() async {
@@ -68,7 +68,7 @@ class MusicUseCase {
     Directory rootDir = Directory('/storage/emulated/0');
     //* Llamamos por primera vez a la función recursiva
     await listFiles(rootDir);
-    AppProvider appProviderReader = navigatorKey.currentContext!.read<AppProvider>();
+    PlayerProvider appProviderReader = navigatorKey.currentContext!.read<PlayerProvider>();
     appProviderReader.songList = paths;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
-import 'package:simple_mp3/services/providers/app_provider.dart';
+import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/widgets/player/player_card.dart';
 import 'package:simple_mp3/widgets/tools_row.dart';
 
@@ -15,7 +15,7 @@ class SongsScreen extends StatefulWidget {
 class _SongsScreenState extends State<SongsScreen> {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProviderRead = context.read<AppProvider>();
+    PlayerProvider appProviderRead = context.read<PlayerProvider>();
     return SizedBox(
       child: Column(
         children: [
