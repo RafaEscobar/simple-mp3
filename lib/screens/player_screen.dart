@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:simple_mp3/screens/navigation/tabs_navigator.dart';
 import 'package:simple_mp3/services/permission_service.dart';
@@ -18,18 +17,15 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   late PermissionStatus showNoPermission;
-  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
-    _audioPlayer = AudioPlayer();
     super.initState();
     showNoPermission = PreferencesService.storagePermissionResponse;
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
     super.dispose();
   }
 

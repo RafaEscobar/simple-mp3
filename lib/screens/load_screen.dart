@@ -1,16 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/main.dart';
-import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
 import 'package:simple_mp3/services/permission_service.dart';
 import 'package:simple_mp3/services/preferences_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
+import 'package:simple_mp3/use_cases/playlist_use_case.dart';
 
 class LoadScreen extends StatefulWidget{
   static const String routeName = 'load-screen';
@@ -35,8 +33,7 @@ class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
     //* Retrazo inicial para splash
     await Future.delayed(const Duration(milliseconds: 600));
     if (PreferencesService.storagePermissionResponse.isGranted) await MusicUseCase.search();
-    //* Setamos la última canción reproducida
-    if (PreferencesService.currentSong.isNotEmpty) navigatorKey.currentContext!.read<AppProvider>().currentSong = Song.fromJson(jsonDecode(PreferencesService.currentSong));
+    if (navigatorKey.currentContext!.read<AppProvider>().songList.isNotEmpty) PlaylistUseCase.buildPlayList();
     //* Inicia animación de salida
     _exitController.forward().then((value) => context.goNamed(PlayerScreen.routeName));
   }

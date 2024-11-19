@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_mp3/services/player_service.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 import 'package:simple_mp3/widgets/player/title_control_widget.dart';
 
@@ -39,12 +38,12 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 SizedBox(
                   width: size.width * .18,
                   height: size.height * .08,
-                  child: (appProviderRead.currentSong.coverPage == null) ?
-                  const Icon(
+                  child: const Icon(
                     Ionicons.musical_note_outline,
                     color: Colors.black,
                     size: 40,
-                  ) :
+                  )
+                  /*
                   Container(
                     decoration: BoxDecoration(
                       boxShadow: const[
@@ -65,12 +64,13 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                       },
                     ),
                   ),
+                  */
                 ),
                 SizedBox(width: size.width * .02,),
                 SizedBox(
                   width: size.width * .32,
                   height: size.height * .1,
-                  child: TitleControlWidget(title: appProviderRead.currentSong.title)
+                  child: const TitleControlWidget(title: 'ejemplo')
                 )
               ],
             ),
@@ -80,7 +80,7 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
               children: [
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () => (),
+                  onPressed: () async => await appProviderRead.audioPlayer.seekToPrevious(),
                   icon: const Icon(
                     Ionicons.play_back_circle_outline,
                     size: 38,
@@ -88,17 +88,18 @@ class _ControlsPlayerState extends State<ControlsPlayer> {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () async => PlayerService.playMusic(appProviderRead.currentSong.path),
-                  icon: const Icon(
+                  onPressed: () async {
+                    //*
+                  },
+                  icon: Icon(
+                    appProviderRead.isReproducing ? Ionicons.pause_circle_outline :
                     Ionicons.play_circle_outline,
                     size: 38,
                   ),
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {
-
-                  },
+                  onPressed: () async => await appProviderRead.audioPlayer.seekToNext(),
                   icon: const Icon(
                     Ionicons.play_forward_circle_outline,
                     size: 38,

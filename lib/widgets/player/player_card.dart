@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/custom_string_service.dart';
@@ -7,9 +8,11 @@ import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class PlayerCard extends StatefulWidget {
   final Song song;
+  final int index;
   const PlayerCard({
     super.key,
-    required this.song
+    required this.song,
+    required this.index
   });
 
   @override
@@ -20,6 +23,7 @@ class _PlayerCardState extends State<PlayerCard> {
   @override
   Widget build(BuildContext context) {
     AppProvider appProviderRead = context.read<AppProvider>();
+    AppProvider appProviderWatch = context.watch<AppProvider>();
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
@@ -28,7 +32,13 @@ class _PlayerCardState extends State<PlayerCard> {
         color: Colors.transparent,
         child: InkWell(
           splashColor: Colors.white,
-          onTap: () => appProviderRead.currentSong = widget.song,
+          onTap: () async {
+            appProviderRead.audioPlayer.seek(
+              Duration.zero,
+              index: widget.index
+            );
+            await appProviderRead.audioPlayer.play();
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
@@ -37,30 +47,42 @@ class _PlayerCardState extends State<PlayerCard> {
                 SizedBox(
                   child: Row(
                     children: [
-                      Container(
-                        width: size.height * .08,
-                        height: size.height * .08,
-                        decoration: BoxDecoration(
-                          boxShadow: const[
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 5)
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: Image.memory(
-                          widget.song.coverPage!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              'assets/images/album_default.jpg',
+                      Stack(
+                        children: [
+                          Container(
+                            width: size.height * .08,
+                            height: size.height * .08,
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5)
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Image.memory(
+                              widget.song.coverPage!,
                               fit: BoxFit.cover,
-                            );
-                          },
-                        ),
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/album_default.jpg',
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                          Visibility(
+                            visible: (appProviderWatch.isReproducing),
+                            child: Positioned.fill(
+                              child: Center(
+                                child: Lottie.asset('assets/animations/reproducing.json'),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(width: 10,),
                       Column(
