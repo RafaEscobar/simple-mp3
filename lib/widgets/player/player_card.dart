@@ -9,11 +9,9 @@ import 'package:simple_mp3/services/providers/player_provider.dart';
 
 class PlayerCard extends StatefulWidget {
   final Song song;
-  final int index;
   const PlayerCard({
     super.key,
     required this.song,
-    required this.index
   });
 
   @override
@@ -36,7 +34,7 @@ class _PlayerCardState extends State<PlayerCard> {
           onTap: () async {
             appProviderRead.audioPlayer.seek(
               Duration.zero,
-              index: widget.index
+              index: widget.song.index
             );
             await appProviderRead.audioPlayer.play();
           },

@@ -19,6 +19,7 @@ class MusicUseCase {
       '/storage/emulated/0/Android/data',
       '/storage/emulated/0/Android/obb',
     ];
+    int index = 0;
 
     //* Función para listar los archivos encontrados.
     Future<void> listFiles(Directory dir) async {
@@ -52,6 +53,7 @@ class MusicUseCase {
               artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
               coverPage: metadata.albumArt ?? defaultImage,
               path: metadata.filePath ?? '',
+              index: index++
             );
 
             //* Agregamos el path de la canción a nuestro listado final de paths

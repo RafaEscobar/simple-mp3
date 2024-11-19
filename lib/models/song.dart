@@ -1,12 +1,14 @@
 import 'package:flutter/services.dart';
 
 class Song {
+  final int index;
   final String title;
   final String artist;
   final Uint8List? coverPage;
   final String path;
 
   Song({
+    this.index = 0,
     this.title = '',
     this.artist = '',
     this.path = '',
@@ -14,6 +16,7 @@ class Song {
   });
 
   Map<String, dynamic> toJson() => {
+    'index': index,
     'title': title,
     'artist': artist,
     'coverPage': coverPage,
@@ -21,6 +24,7 @@ class Song {
   };
 
   factory Song.fromJson(Map<String, dynamic> json) => Song(
+    index: json['index'] ?? 0,
     title: json['title'] ?? '',
     artist: json['artist'] ?? '',
     path: json['path'] ?? '',

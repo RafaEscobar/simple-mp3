@@ -28,7 +28,7 @@ class _SongsScreenState extends State<SongsScreen> {
               itemCount: appProviderRead.songList.length,
               itemBuilder: (context, index) {
                 Song currentSong = appProviderRead.songList[index];
-                return PlayerCard(song: currentSong, index: index,);
+                return PlayerCard(song: currentSong);
               },
             ),
           )
