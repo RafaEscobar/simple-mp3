@@ -48,16 +48,18 @@ class MusicUseCase {
             if (!isRestricted) await listFiles(Directory(entity.path));
           } else if (entity is File && entity.path.endsWith('.mp3')) {
             final metadata = await MetadataRetriever.fromFile(File(entity.path));
-            Song currentSong = Song(
-              title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
-              artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
-              coverPage: metadata.albumArt ?? defaultImage,
-              path: metadata.filePath ?? '',
-              index: index++
-            );
+            if (metadata.trackDuration! > 10000) {
+              Song currentSong = Song(
+                title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
+                artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
+                coverPage: metadata.albumArt ?? defaultImage,
+                path: metadata.filePath ?? '',
+                index: index++
+              );
 
-            //* Agregamos el path de la canción a nuestro listado final de paths
-            paths.add(currentSong);
+              //* Agregamos el path de la canción a nuestro listado final de paths
+              paths.add(currentSong);
+            }
           }
         }
       } catch (e) {
