@@ -11,15 +11,15 @@ import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/use_cases/music_use_case.dart';
 import 'package:simple_mp3/use_cases/playlist_use_case.dart';
 
-class LoadScreen extends StatefulWidget{
+class SplashScreen extends StatefulWidget{
   static const String routeName = 'load-screen';
-  const LoadScreen({super.key});
+  const SplashScreen({super.key});
 
   @override
-  State<LoadScreen> createState() => _LoadScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _LoadScreenState extends State<LoadScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   PlayerProvider providerRead = navigatorKey.currentContext!.read<PlayerProvider>();
   //* Controladores para animaciones de entrada y salida
   late AnimationController _entryController;

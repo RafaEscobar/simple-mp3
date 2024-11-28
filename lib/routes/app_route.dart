@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_mp3/screens/load_screen.dart';
 import 'package:simple_mp3/screens/player_screen.dart';
+import 'package:simple_mp3/screens/splash_screen.dart';
 import 'package:simple_mp3/services/providers/app_provider.dart';
 
 class AppRoute {
@@ -10,7 +10,7 @@ class AppRoute {
     List<RouteBase> routes = [
       GoRoute(
         path: "/",
-        builder: (BuildContext context, GoRouterState state) => const LoadScreen(),
+        builder: (BuildContext context, GoRouterState state) => const SplashScreen(),
         routes: [
           GoRoute(
             path: PlayerScreen.routeName,

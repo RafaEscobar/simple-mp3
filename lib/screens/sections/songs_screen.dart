@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:simple_mp3/models/song.dart';
 import 'package:simple_mp3/services/providers/player_provider.dart';
 import 'package:simple_mp3/widgets/player/player_card.dart';
-import 'package:simple_mp3/widgets/tools_row.dart';
 
 class SongsScreen extends StatefulWidget {
   const SongsScreen({super.key});
@@ -19,10 +18,6 @@ class _SongsScreenState extends State<SongsScreen> {
     return SizedBox(
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 4),
-            child: ToolsRow()
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: appProviderRead.songList.length,

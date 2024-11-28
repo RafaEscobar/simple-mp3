@@ -48,7 +48,7 @@ class MusicUseCase {
             if (!isRestricted) await listFiles(Directory(entity.path));
           } else if (entity is File && entity.path.endsWith('.mp3')) {
             final metadata = await MetadataRetriever.fromFile(File(entity.path));
-            if (metadata.trackDuration! > 10000) {
+            if (metadata. trackDuration! > 6000) {
               Song currentSong = Song(
                 title: metadata.trackName ?? SongService.buildTrakName(metadata.filePath!),
                 artist: metadata.trackArtistNames?.join(', ') ?? 'Desconocido',
